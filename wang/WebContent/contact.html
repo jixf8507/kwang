@@ -12,7 +12,6 @@
 <script src="js/jquery-1.11.1.min.js"></script>
 
 <script type="text/javascript" src="js/move-top.js"></script>
-
 </head>
 <body>
 	<div class="header" id="home">
@@ -54,15 +53,46 @@
 								<p>No.173, Olympic Garden, Huishan District,</p>
 								<p>Wuxi City, Jiangsu Province</p>
 								<p>China</p>
-								<p> Mobile & Whatsapp:0086 13921198925</p>
+								<p>Mobile & Whatsapp:0086 13921198925</p>
 								<h1>Email:</h1>
 								<p>kwangpurification@163.com</p>
 								<p>wxakatherine@gmail.com</p>
-								<p><a href="skype:wxakatherine1?add" target="blank"><img alt="" src="http://mystatus.skype.com/balloon/wxakatherine1" border="0" />SKYPE</a></p>
+								<p>
+									SKYPE:<a href="skype:wxakatherine1?add" target="blank"><img
+										alt="" src="http://mystatus.skype.com/balloon/wxakatherine1"
+										border="0" />wxakatherine1</a>
+								</p>
 							</div>
 							<div class="clearfix"></div>
 						</div>
-
+						<div class="col span_2_of_4">
+							<div class="contact-form">
+								<h1 class="style">Contact Us</h1>
+								<form method="post" action="contact-post.html">
+									<div>
+										<span><label>Name</label></span> <span><input
+											id="userName" type="text" class="textbox"></span>
+									</div>
+									<div>
+										<span><label>E-Mali</label></span> <span><input
+											id="userEmail" type="text" class="textbox"></span>
+									</div>
+									<div>
+										<span><label>Mobile</label></span> <span><input
+											id="userPhone" type="text" class="textbox"></span>
+									</div>
+									<div>
+										<span><label>Subject</label></span> <span><textarea
+												id="userMsg"> </textarea></span>
+									</div>
+									<div>
+										<div class="button">
+											<span><a href="javaScript:send();">Submit me</a></span>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
 						<div class="clearfix"></div>
 					</div>
 				</div>
@@ -90,11 +120,49 @@
 					});
 
 				});
+				function send() {
+					var userEmail = $("#userEmail").val();
+					var reg = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+
+					if (userEmail == "") {
+						alert('info:E-Mali can not be empty!');
+						return;
+					}
+					if (!reg.test(userEmail)) {
+						alert('info:The mailbox address format is incorrect!');
+						return;
+					}
+
+					if ($("#userMsg").val() == "") {
+						alert('info:Subject can not be empty!');
+						return;
+					}
+					$.ajax({
+						type : "POST",
+						url : "EmailSend.htm?",
+						data : {
+							"userName" : $("#userName").val(),
+							"userEmail" : $("#userEmail").val(),
+							"userPhone" : $("#userPhone").val(),
+							"userMsg" : $("#userMsg").val()
+						},
+						async : false,
+						beforeSend : function() {
+
+						},
+						success : function(data) {
+							alert(data);
+							location.reload();
+						},
+						error : function() {
+							alert("error");
+						}
+					});
+				}
 			</script>
 			<a class="scroll" href="#home" id="toTop" style="display: block;">
 				<span id="toTopHover" style="opacity: 1;"> </span>
 			</a>
-
 		</div>
 	</div>
 </body>
